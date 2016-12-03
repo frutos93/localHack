@@ -1,22 +1,13 @@
 var data;
 var text;
 if (location.hostname == "www.facebook.com") {
-    alert('face');
     data = document.getElementsByClassName('_5pbx userContent');
+    console.log(data);
 } else if (location.hostname == 'twitter.com') {
     console.log('this');
     data = document.getElementsByClassName('js-tweet-text tweet-text');
 };
 
-var timer = setInterval(changeTexts, 2500);
-var lastData = 0;
-
-function changeTexts() {
-
-    for (var i = lastData; i < 10; i++) {
-        isMessageAbusive(data[i].innerText, i);
-    }
-}
 
 function isMessageAbusive(message, x) {
     $.ajax({
@@ -99,4 +90,13 @@ function getRandomChosenPhrase() {
         "C'mon, Mom! Five more minutes before you tuck me in!"
     ];
     return phrases[Math.floor(Math.random() * phrases.length)];
+}
+
+var timer = setInterval(changeTexts, 2500);
+var lastData = 0;
+
+function changeTexts() {
+    for (var i = lastData; i < 10; i++) {
+        isMessageAbusive(data[i].innerText, i);
+    }
 }
