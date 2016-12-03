@@ -1,10 +1,10 @@
 var data;
 var text;
+
 if (location.hostname == "www.facebook.com") {
     data = document.getElementsByClassName('_5pbx userContent');
     console.log(data);
 } else if (location.hostname == 'twitter.com') {
-    console.log('this');
     data = document.getElementsByClassName('js-tweet-text tweet-text');
 };
 
@@ -16,7 +16,7 @@ function isMessageAbusive(message, x) {
         'data': "{ \"message\": \"" + message + "\" }",
         'url': 'https://partner.bark.us/api/v1/messages?token=5SFQytoH5A69CUB2CY3ETGNg',
         'contentType': 'application/json; charset=utf-8',
-        'success': function(response) {
+        'success': function (response) {
             //console.log(response);
             if (response['abusive']) {
                 data[x].innerText = getRandomPositiveMessage();
@@ -24,7 +24,7 @@ function isMessageAbusive(message, x) {
                 console.log("Your message \"" + message + "\" is not abusive. Good job!");
             }
         },
-        'error': function(response, status, errorThrown) {
+        'error': function (response, status, errorThrown) {
             console.log(response);
             console.log(status);
         }
@@ -52,7 +52,7 @@ function getRandomChuckNorrisJoke() {
         method: 'GET',
         async: false,
         url: 'http://api.icndb.com/jokes/random?exclude=[explicit,nerdy]',
-        success: function(response) {
+        success: function (response) {
             joke = response.value.joke;
         }
     });
@@ -65,11 +65,11 @@ function getRandomJokeTambal() {
     $.ajax({
         async: false,
         url: 'http://tambal.azurewebsites.net/joke/random',
-        success: function(response) {
+        success: function (response) {
             console.log("TAMBAL")
             joke = response.joke;
         },
-        error: function(er, err) {
+        error: function (er, err) {
             console.log("ERROR");
             console.log(er);
             console.log(err);
@@ -92,11 +92,14 @@ function getRandomChosenPhrase() {
     return phrases[Math.floor(Math.random() * phrases.length)];
 }
 
-var timer = setInterval(changeTexts, 2500);
-var lastData = 0;
 
+var lastData = 0;
+var iter = 1;
+var timer = setInterval(changeTexts, 3000);
 function changeTexts() {
-    for (var i = lastData; i < 10; i++) {
+    for (var i = lastData; i < iter; i++) {
         isMessageAbusive(data[i].innerText, i);
     }
+    lastData= iter;
+    iter += 1;
 }
