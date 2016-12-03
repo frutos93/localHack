@@ -4,7 +4,7 @@
     "name": "DadJokes Generator",
     "version": "1.0.0",
     "description": "Anti bullying extension that changes tweets or facebook posts that contain harrasment material.",
-    "permissions":["https://partner.bark.us/*"],
+    "permissions":["https://partner.bark.us/*", "http://tambal.azurewebsites.net/*", "http://api.icndb.com/*"],
     "content_scripts": [{
         "js": ["jquery.min.js", "content.js"],
         "matches": ["https://twitter.com/*", "https://www.facebook.com/*"]
