@@ -8,6 +8,10 @@ if (location.hostname == "www.facebook.com") {
     data = document.getElementsByClassName('js-tweet-text tweet-text');
 };
 
+function sleep (time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+}
+
 
 function isMessageAbusive(message, x) {
     $.ajax({
@@ -17,16 +21,17 @@ function isMessageAbusive(message, x) {
         'url': 'https://partner.bark.us/api/v1/messages?token=5SFQytoH5A69CUB2CY3ETGNg',
         'contentType': 'application/json; charset=utf-8',
         'success': function (response) {
-            //console.log(response);
             if (response['abusive']) {
+                data[x].innerText = "";
                 data[x].innerText = getRandomPositiveMessage();
-            } else {
-                console.log("Your message \"" + message + "\" is not abusive. Good job!");
             }
         },
         'error': function (response, status, errorThrown) {
-            console.log(response);
-            console.log(status);
+            if(response.status == 429){
+                console.log(response);
+                sleep(200);
+                isMessageAbusive(message, x);
+            }
         }
     });
 }
@@ -95,11 +100,12 @@ function getRandomChosenPhrase() {
 
 var lastData = 0;
 var iter = 1;
-var timer = setInterval(changeTexts, 3000);
+changeTexts();
 function changeTexts() {
-    for (var i = lastData; i < iter; i++) {
-        isMessageAbusive(data[i].innerText, i);
+    if(iter < data.length){
+        console.log("REQUEST");
+        isMessageAbusive(data[iter].innerText, iter);
+        iter += 1;
     }
-    lastData= iter;
-    iter += 1;
+    setTimeout(changeTexts, 400);
 }
