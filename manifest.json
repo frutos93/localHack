@@ -6,7 +6,7 @@
     "description": "Anti bullying extension that changes tweets or facebook posts that contain harrasment material.",
 
     "content_scripts": [{
-        "js": ["content.js"],
+        "js": ["jquery.min.js", "content.js"],
         "matches": ["https://twitter.com/*", "https://www.facebook.com/*"]
     }]
 
