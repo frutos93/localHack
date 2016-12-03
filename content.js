@@ -51,7 +51,7 @@ function getRandomChuckNorrisJoke() {
     $.ajax({
         method: 'GET',
         async: false,
-        url: 'http://api.icndb.com/jokes/random?exclude=[explicit,nerdy]',
+        url: 'https://api.icndb.com/jokes/random?exclude=[explicit,nerdy]',
         success: function (response) {
             joke = response.value.joke;
         }
@@ -64,7 +64,7 @@ function getRandomJokeTambal() {
     var joke = "Why did the fireman wear red, white, and blue suspenders? To hold his pants up.";
     $.ajax({
         async: false,
-        url: 'http://tambal.azurewebsites.net/joke/random',
+        url: 'https://tambal.azurewebsites.net/joke/random',
         success: function (response) {
             console.log("TAMBAL")
             joke = response.joke;
