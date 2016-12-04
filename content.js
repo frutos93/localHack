@@ -1,17 +1,18 @@
 var data;
 var text;
 
+
 if (location.hostname == "www.facebook.com") {
     data = document.getElementsByClassName('_5pbx userContent');
     console.log(data);
 } else if (location.hostname == 'twitter.com') {
     data = document.getElementsByClassName('js-tweet-text tweet-text');
-};
+}
+;
 
-function sleep (time) {
+function sleep(time) {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
-
 
 function isMessageAbusive(message, x) {
     $.ajax({
@@ -27,10 +28,14 @@ function isMessageAbusive(message, x) {
             }
         },
         'error': function (response, status, errorThrown) {
-            if(response.status == 429){
+            if (response.status == 429) {
                 console.log(response);
                 sleep(200);
-                isMessageAbusive(message, x);
+                try {
+                    isMessageAbusive(message, x);
+                } catch (e) {
+                    console.log(e);
+                }
             }
         }
     });
@@ -71,13 +76,9 @@ function getRandomJokeTambal() {
         async: false,
         url: 'https://tambal.azurewebsites.net/joke/random',
         success: function (response) {
-            console.log("TAMBAL")
             joke = response.joke;
         },
         error: function (er, err) {
-            console.log("ERROR");
-            console.log(er);
-            console.log(err);
         }
     });
     return joke;
@@ -100,12 +101,20 @@ function getRandomChosenPhrase() {
 
 var lastData = 0;
 var iter = 1;
-changeTexts();
 function changeTexts() {
-    if(iter < data.length){
-        console.log("REQUEST");
-        isMessageAbusive(data[iter].innerText, iter);
-        iter += 1;
+    if (iter < data.length) {
+        try {
+            isMessageAbusive(data[iter].innerText, iter);
+            iter += 1;
+        } catch (e) {
+            console.log(e)
+        }
     }
     setTimeout(changeTexts, 400);
 }
+
+chrome.runtime.sendMessage({msg: "getDisabled"}, function (response) {
+    if (response.enabled){
+        changeTexts();
+    }
+});
