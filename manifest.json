@@ -1,9 +1,9 @@
 {
     "manifest_version": 2,
 
-    "name": "Bullying to jokes",
+    "name": "NerfOutForHarrassment",
     "version": "1.0.0",
-    "description": "Anti bullying extension that changes tweets or facebook posts that contain harrasment material.",
+    "description": "Anti bullying extension that changes tweets that contain harrasment material.",
     "permissions":["https://partner.bark.us/*", "https://tambal.azurewebsites.net/*", "https://api.icndb.com/*"],
     "browser_action": {
     },
